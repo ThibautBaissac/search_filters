@@ -7,7 +7,7 @@ A filter feature similar to Amazon sidebar using Rails 7.
 3. Quickstart
 
 ## 1. In action
-![search_filters](https://s10.gifyu.com/images/search_filtersa1f5ab33282ed23b.gif)
+![search_filters](https://user-images.githubusercontent.com/59996803/148065272-4c033b71-409b-4775-8d7d-48f85f150738.gif)
 ## 2. Stack
 - Rails 7
 - esbuild
