@@ -1,0 +1,88 @@
+<h1>Rent a movie</h1>
+
+<div class="row">
+  <ul class="list-inline">
+    Filters :
+    <% if params[:title].present? %>
+      <li class="list-inline-item btn btn-primary btn-sm"><%= link_to "Title: #{params[:title]} | x", request.params.except(:title), class: "text-white text-decoration-none" %></li>
+    <% end %>
+    <% if params[:release].present? %>
+      <li class="list-inline-item btn btn-primary btn-sm"><%= link_to "Release: #{params[:release]} | x", request.params.except(:release), class: "text-white text-decoration-none" %></li>
+    <% end %>
+    <% if params[:genre].present? %>
+      <li class="list-inline-item btn btn-primary btn-sm"><%= link_to "Genre: #{params[:genre]} | x", request.params.except(:genre), class: "text-white text-decoration-none" %></li>
+    <% end %>
+    <% if params[:price_range].present? %>
+      <li class="list-inline-item btn btn-primary btn-sm"><%= link_to "Price range: #{price_range_name(params[:price_range])} | x", request.params.except(:price_range), class: "text-white text-decoration-none" %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="row">
+  <div class="col-sm-2" style="font-size: 0.75rem">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h6>Year</h6>
+        <% @releases.sort_by{ |b| b }.reverse.each do |release| %>
+          <div>
+            <% if params[:release] == release.to_s %>
+              <%= link_to release, request.params.except(:release), style: "font-weight: 700; " %>
+            <% else %>
+              <%= link_to release, request.params.merge(release: release), style: "text-decoration: none;" %>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <h6>Genre</h6>
+        <% @genres.sort_by{ |b| b }.each do |genre| %>
+          <div>
+            <% if params[:genre] == genre %>
+              <%= link_to genre, request.params.except(:genre), style: "font-weight: 700;" %>
+            <% else %>
+              <%= link_to genre, request.params.merge(genre: genre), style: "text-decoration: none;" %>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <h6>Price</h6>
+        <% @price_ranges.each do |price_range| %>
+          <div>
+            <% if params[:price_range].present? && (params[:price_range][0] == price_range[0].to_s && params[:price_range][1] == price_range[1].to_s) %>
+              <%= link_to price_range_name(price_range), request.params.except(:price_range), style: "font-weight: 700;" %>
+            <% else %>
+              <%= link_to price_range_name(price_range), request.params.merge(price_range: price_range), style: "text-decoration: none;" %>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-sm-10">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Price</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @movies.each do |movie| %>
+            <%= content_tag :tr, id: dom_id(movie), class: dom_class(movie) do %>
+                <td><%= movie.title %></td>
+                <td><%= movie.genre %></td>
+                <td><%= movie.price %></td>
+                <td><%= movie.release %></td>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
