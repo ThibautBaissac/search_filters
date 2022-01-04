@@ -8,7 +8,7 @@ ApplicationRecord.transaction do
       title: Faker::Movie.title,
       release: rand(2010..2022),
       price: rand(3..30),
-      genre: genre.sample,
+      genre: genre.sample
     )
   end
 end
